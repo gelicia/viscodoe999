@@ -1,0 +1,97 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />		
+    <title>Colorado Visualization - 90/90/90 Schools</title> 
+
+  <!-- 
+  CSS and HTML Template by miss monorom http://www.intensivstation.ch
+  This work is licensed under a Creative Commons License http://creativecommons.org/licenses/by/1.0/
+  -->
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="js/lib/miso.ds.deps.ie.min.0.4.0.js"></script>
+    <script src="js/lib/d3.v3.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.9.2.custom.min.css">
+    <script src="js/lib/jquery-1.8.3.min.js"></script>
+    <script src="js/lib/jquery-ui-1.9.2.custom.min.js"></script>
+    <!-- Your application code -->
+    <script src="js/main.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#sliderFRL").slider({
+          min : 0,
+          max : 100,
+          value: 90,
+          slide: function( event, ui ) {
+             $( "#frlAmt" ).html( ui.value );
+          },
+          change: function(event, ui) {
+              reDraw();
+          }
+        });
+        $("#sliderEth").slider({
+          min : 0,
+          max : 100,
+          value: 90,
+          slide: function( event, ui ) {
+             $( "#ethAmt" ).html( ui.value );
+          },
+          change: function(event, ui) {
+              reDraw();
+          }
+        });
+        $("#sliderAch").slider({
+          min : 0,
+          max : 100,
+          value: 90,
+          //step: 10, //I don't see anyone wanting anything besides A, B, C averages
+          slide: function( event, ui ) {
+             $( "#achAmt" ).html( ui.value );
+             $( "#achAmtGrd" ).html( Number(ui.value).gradePctToLetter() );
+          },
+          change: function(event, ui) {
+              reDraw();
+          }
+        });
+      });
+    </script>
+  </head> 
+
+  <body onLoad="loadDataset()">
+    <h2>Colorado Data Visualization</h2>
+    <h1></h1>
+    <div id="left"></div>
+
+    <div id="right"></div>
+
+    <div id="content">
+      <h2>What are Colorado's 90/90/90 schools?</h2>
+      <p id="loading" class="loading">Loading Data...</p>
+      <div id="instructions" style="display:none;">
+        <p>Economic disadvantage can prevent some students from performing well in school. 90/90/90 are schools where students are succeeding, despite high poverty levels among their student bodies. The term 90/90/90 traditionally refers to the following three characteristics:</p>
+        <ul>
+          <li>At least 90% of the school's population is on the Free Reduced Lunch program</li>
+          <li>At least 90% of the school's population is an ethnic minority</li>
+          <li>At least 90% of the school's population have achieved high academic standards</li>
+        </ul>
+        <p>This tool allows you to see what schools fall into this category, and adjust the three requirements to see what schools qualify with different rules.</p>
+
+        <p>But, the last requirement has been changed. Instead of using the grades of the school's population, the last requirement draws from the school grade information supplied. The scale of the grade letters also uses the grading scale supplied.</p>
+
+        <p>Drag the slider to set the minimum requirements and see the schools that fit.</p>
+
+        <p class="inst sliderLbl">Free Reduced Lunch: <span id="frlAmt">90</span>%</p>
+        <div id="sliderFRL" class="slider"></div>
+        <p class="sliderLbl">Ethnic Minority Population: <span id="ethAmt">90</span>%</p>
+        <div id="sliderEth" class="slider"></div>
+        <p class="sliderLbl">School Grade Average: <span id="achAmt">90</span>% <span id="achAmtGrd">A-</span></p>
+        <div id="sliderAch" class="slider"></div>
+      </div>
+      <div id="schInfo"></div>            
+    </div>
+  </body>
+</html>
